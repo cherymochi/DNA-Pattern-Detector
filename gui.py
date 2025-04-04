@@ -1,74 +1,109 @@
 # Programmer: Nathalea Evans - 2101707
 
-# GUI Design
+# This code is a simple GUI application that allows users to input a DNA sequence and analyze it for specific patterns.
+# It uses the tkinter library for the GUI and a custom DNA class for analysis.
 
 # Imports
 import tkinter as tk
 from tkinter import ttk
+from dna_analyzer import DNA
 
-
-# Functions
-def pattern():
-    # Function to detect DNA pattern
+class DNAAnalyzerGUI:
+    def __init__(self, window):
+        self.window = window
+        self.window.title("DNA Pattern Detector")
+        self.window.geometry("500x400")
+        
+        # Initialize StringVar first
+        self.dna_sequence = tk.StringVar()
+        self.out_str = tk.StringVar()
+        
+        # Create widgets
+        self.create_widgets()
     
-    start = "ATG" # Start codon
-    can_pattern = "GGTGAT"
-    hunt_pattern = "CAGCAGCAG"
-    sequence = dna_sequence.get()
+    def create_widgets(self):
+        """Create and arrange GUI widgets."""
+        # Title
+        title_label = ttk.Label(
+            master=self.window, 
+            text="DNA Pattern Detector", 
+            font="Calibri 24"
+        )
+        title_label.pack(pady=20)
+        
+        # Input Frame
+        in_frame = tk.Frame(master=self.window)
+        in_frame.pack(pady=10)
+        
+        input_label = ttk.Label(
+            master=in_frame, 
+            text="Enter DNA sequence:"
+        )
+        input_label.pack(side=tk.LEFT, padx=5)
+        
+        self.entry = ttk.Entry(
+            master=in_frame, 
+            width=50, 
+            textvariable=self.dna_sequence
+        )
+        self.entry.pack(side=tk.LEFT, padx=5)
+        
+        # Button Frame
+        button_frame = tk.Frame(master=self.window)
+        button_frame.pack(pady=10)
+        
+        # Analyze Button
+        self.analyze_button = ttk.Button(
+            master=button_frame, 
+            text="Analyze", 
+            command=self.analyze_sequence
+        )
+        self.analyze_button.config(width=10, padding=3)
+        self.analyze_button.pack(side=tk.LEFT, padx=10)
+        
+        # Reset Button
+        self.reset_button = ttk.Button(
+            master=button_frame, 
+            text="Reset", 
+            command=self.reset_fields
+        )
+        self.reset_button.config(width=10, padding=3)
+        self.reset_button.pack(side=tk.LEFT, padx=10)
+        
+        # Output
+        output_label = ttk.Label(
+            master=self.window, 
+            text="Output", 
+            font="Calibri 16", 
+            textvariable=self.out_str
+        )
+        output_label.pack(pady=10)
     
-    # Convert to uppercase
-    upp_seq = sequence.upper()
-    
-    # Check for start codon
-    if start in upp_seq:
-        start_index = upp_seq.index(start)
-        # Check for can_pattern
-        if can_pattern in upp_seq[start_index:]:
-            can_index = upp_seq.index(can_pattern, start_index)
-            output_label.config(text="Pattern Detected: Cancer")
-            # Check for hunt_pattern
-            if hunt_pattern in upp_seq[can_index:]:
-                hunt_index = upp_seq.index(hunt_pattern, can_index)
-                output_label.config(text="Pattern Detected: Huntington's Disease")
-            else:
-                output_label.config(text="No Pattern Detected")
-                return
+    def analyze_sequence(self):
+        """Analyze the DNA sequence and display results."""
+        sequence = self.dna_sequence.get().strip().upper()
+        if not sequence:
+            self.out_str.set("Please enter a DNA sequence")
+            return
+            
+        try:
+            analyzer = DNA(sequence)
+            result = analyzer.analyze()
+            self.out_str.set(result)
+        except Exception as e:
+            self.out_str.set(f"Error: {str(e)}")
 
+    def reset_fields(self):
+        """Reset input and output fields."""
+        self.dna_sequence.set("")
+        self.out_str.set("")
+        self.entry.focus_set()
 
-# Create Window
-window = tk.Tk()
-window.title("DNA Pattern Detector")
-window.geometry("500x400")
+# Main function to run the GUI application
+def main():
+    window = tk.Tk()
+    app = DNAAnalyzerGUI(window)
+    window.mainloop()
 
-# Tile
-title_label = ttk.Label(master = window, text="DNA Pattern Detector", font="Calibri 24")
-title_label.pack(pady=20)
-
-# Input 
-
-# Variables
-dna_sequence = tk.StringVar()
-
-in_frame = tk.Frame(master = window)
-input_label = ttk.Label(master = in_frame, text="Enter DNA sequence:")
-entry = ttk.Entry(master = in_frame, width=50, textvariable=dna_sequence)
-button = ttk.Button(master = window, text="Go", command = pattern)
-button.config(width=10, padding=3)
-
-
-
-# Output
-out_str = tk.StringVar()
-output_label = ttk.Label(master = window, text="Output", font="Calibri 16", textvariable=out_str)
-
-# Pack widgets
-in_frame.pack(pady=10)
-input_label.pack(side=tk.LEFT, padx=5)
-entry.pack(side=tk.LEFT, padx=5)
-output_label.pack(pady=10)
-button.pack(pady=10)
-
-
-
-# Run
-window.mainloop()
+if __name__ == "__main__":
+    main()
