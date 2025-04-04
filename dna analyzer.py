@@ -59,6 +59,9 @@ class DNA_Analyzer:
         if index == -1:
             return "Start codon not found."
         
+        if self.detect_huntingtons_gene(index) and self.detect_possible_cancer_mutation(index):
+            return "Huntington's disease gene found and Possible cancer mutation found."
+
         if self.detect_huntingtons_gene(index):
             return "Huntington's disease gene found."
         
