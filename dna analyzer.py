@@ -1,4 +1,4 @@
-class DNA_Analyzer:
+class DNA:
 
     def __init__ (self, sequence):
         ''' this function just initializes both the input string 
@@ -73,7 +73,7 @@ class DNA_Analyzer:
 dna_sequence = input("Enter the DNA sequence you would like to analyze: ").upper()
 # collects and stores the dna sequence string in uppercase
 
-result = DNA_Analyzer(dna_sequence).analyze()
+result = DNA(dna_sequence).analyze()
 # creates an new class object and runs the analyzer on that new object
 
 print(result)
