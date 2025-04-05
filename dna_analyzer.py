@@ -1,6 +1,6 @@
 # TOC Group Assignment - DNA Pattern Analyzer
 # Members: Nathalea Evans - 2101707
-#          Tianna Lue-Lim - 
+#          Tianna Lue-Lim - 2109411
 #          Nathan White - 2101708
 
 
@@ -67,7 +67,7 @@ class DNA:
             return "Start codon not found."
         
         if self.detect_huntingtons_gene(index) and self.detect_possible_cancer_mutation(index):
-            return "Huntington's disease gene found and Possible cancer mutation found."
+            return "Huntington's disease gene found \nPossible cancer mutation found."
 
         if self.detect_huntingtons_gene(index):
             return "Huntington's disease gene found."

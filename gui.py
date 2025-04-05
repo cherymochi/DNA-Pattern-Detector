@@ -22,7 +22,7 @@ class DNAAnalyzerGUI:
         self.create_widgets()
     
     def create_widgets(self):
-        """Create and arrange GUI widgets."""
+        # Create and arrange GUI widgets.
         # Title
         title_label = ttk.Label(
             master=self.window, 
@@ -80,7 +80,7 @@ class DNAAnalyzerGUI:
         output_label.pack(pady=10)
     
     def analyze_sequence(self):
-        """Analyze the DNA sequence and display results."""
+        # Analyze the DNA sequence and display results.
         sequence = self.dna_sequence.get().strip().upper()
         if not sequence:
             self.out_str.set("Please enter a DNA sequence")
@@ -94,7 +94,7 @@ class DNAAnalyzerGUI:
             self.out_str.set(f"Error: {str(e)}")
 
     def reset_fields(self):
-        """Reset input and output fields."""
+        # Reset input and output fields.
         self.dna_sequence.set("")
         self.out_str.set("")
         self.entry.focus_set()
