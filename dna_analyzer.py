@@ -5,6 +5,7 @@
 
 
 # DNA Pattern Analyzer
+# Programmer: Nathan White - 2111439
 class DNA:
 
     def __init__ (self, sequence):
